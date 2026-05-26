@@ -35,7 +35,16 @@ def scrape_characters() -> list[Character]:
 
 def save_characters(characters: list[Character]) -> None:
     for character in characters:
-        character.save()
+        Character.objects.update_or_create(
+            api_id=character.api_id,
+            defaults={
+                "name": character.name,
+                "status": character.status,
+                "species": character.species,
+                "genders": character.genders,
+                "image": character.image
+            }
+        )
 
 
 def sync_characters_with_api() -> None:
